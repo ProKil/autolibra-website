@@ -245,6 +245,7 @@
                         <a href="#method" class="hover:text-primary transition-colors">Method</a>
                         <a href="#lens" class="hover:text-primary transition-colors">Lens</a>
                         <a href="#ladder" class="hover:text-primary transition-colors">Ladder</a>
+                        <a href="#getting-started" class="hover:text-primary transition-colors hidden md:inline">Get started</a>
                         <a href="#bibtex" class="hover:text-primary transition-colors">Cite</a>
                         <a
                             href="https://github.com/Open-Social-World/autolibra"
@@ -736,6 +737,117 @@
                 </div>
             </section>
 
+            <!-- Getting Started -->
+            <section id="getting-started" class="px-6 py-16 bg-gray-50 scroll-mt-16">
+                <div class="max-w-4xl mx-auto">
+                    <div class="max-w-3xl mx-auto text-center mb-10">
+                        <span class="section-chip"><i class="fas fa-rocket"></i> Getting started</span>
+                        <h2 class="font-serif text-3xl font-semibold text-gray-900 mb-3">
+                            Try AutoLibra on your own agents
+                        </h2>
+                        <p class="text-gray-700 leading-relaxed">
+                            A minimal walkthrough to induce and evaluate metrics on your own
+                            trajectories. For the full guide, see the
+                            <a href="https://github.com/Open-Social-World/autolibra" target="_blank" rel="noopener" class="text-primary font-medium underline-offset-2 hover:underline">codebase README</a>.
+                        </p>
+                    </div>
+
+                    <ol class="space-y-5">
+                        <li class="rounded-xl bg-white border border-gray-200 overflow-hidden">
+                            <div class="flex items-start gap-3 px-6 pt-5">
+                                <span class="flex-shrink-0 inline-flex items-center justify-center w-7 h-7 rounded-full bg-primary text-white text-sm font-bold">1</span>
+                                <div>
+                                    <h3 class="font-semibold text-gray-900">Install</h3>
+                                    <p class="text-sm text-gray-600 mt-0.5">Clone the repo and install with <a href="https://docs.astral.sh/uv/" target="_blank" rel="noopener" class="text-primary underline-offset-2 hover:underline">uv</a>.</p>
+                                </div>
+                            </div>
+                            <div class="relative mx-6 my-4">
+                                <button class="copy-btn" onclick="copyCode('code-install')">
+                                    <i class="fas fa-copy mr-1"></i> Copy
+                                </button>
+<pre id="code-install" class="bibtex text-gray-200 bg-gray-900 rounded-lg p-4 overflow-x-auto border border-gray-800">git clone https://github.com/Open-Social-World/autolibra
+cd autolibra
+uv sync</pre>
+                            </div>
+                        </li>
+
+                        <li class="rounded-xl bg-white border border-gray-200 overflow-hidden">
+                            <div class="flex items-start gap-3 px-6 pt-5">
+                                <span class="flex-shrink-0 inline-flex items-center justify-center w-7 h-7 rounded-full bg-primary text-white text-sm font-bold">2</span>
+                                <div>
+                                    <h3 class="font-semibold text-gray-900">Download trajectories &amp; feedback</h3>
+                                    <p class="text-sm text-gray-600 mt-0.5">Pull the annotated datasets from our Hugging Face hub (CoGym, Sotopia, WebArena, WebVoyager, Baba-Is-AI, MiniHack).</p>
+                                </div>
+                            </div>
+                            <div class="relative mx-6 my-4">
+                                <button class="copy-btn" onclick="copyCode('code-data')">
+                                    <i class="fas fa-copy mr-1"></i> Copy
+                                </button>
+<pre id="code-data" class="bibtex text-gray-200 bg-gray-900 rounded-lg p-4 overflow-x-auto border border-gray-800">git lfs install
+git clone https://huggingface.co/datasets/open-social-world/autolibra .data</pre>
+                            </div>
+                        </li>
+
+                        <li class="rounded-xl bg-white border border-gray-200 overflow-hidden">
+                            <div class="flex items-start gap-3 px-6 pt-5">
+                                <span class="flex-shrink-0 inline-flex items-center justify-center w-7 h-7 rounded-full bg-primary text-white text-sm font-bold">3</span>
+                                <div>
+                                    <h3 class="font-semibold text-gray-900">Annotate your own trajectories</h3>
+                                    <p class="text-sm text-gray-600 mt-0.5">Use the TTY annotator, or launch the Streamlit UI for a browser interface.</p>
+                                </div>
+                            </div>
+                            <div class="relative mx-6 my-4">
+                                <button class="copy-btn" onclick="copyCode('code-annotate')">
+                                    <i class="fas fa-copy mr-1"></i> Copy
+                                </button>
+<pre id="code-annotate" class="bibtex text-gray-200 bg-gray-900 rounded-lg p-4 overflow-x-auto border border-gray-800"># Terminal
+uv run python src/tty/tty_annotation.py .data/webarena .data/annotations/webarena \
+    --annotator-id &lt;your-name&gt;
+
+# Streamlit UI
+uv run streamlit run src/tty/tty_annotation.py .data/sotopia .data/annotations/sotopia \
+    -- --annotator-id &lt;your-name&gt; --use-streamlit</pre>
+                            </div>
+                        </li>
+
+                        <li class="rounded-xl bg-white border border-gray-200 overflow-hidden">
+                            <div class="flex items-start gap-3 px-6 pt-5">
+                                <span class="flex-shrink-0 inline-flex items-center justify-center w-7 h-7 rounded-full bg-primary text-white text-sm font-bold">4</span>
+                                <div>
+                                    <h3 class="font-semibold text-gray-900">Induce metrics &amp; evaluate</h3>
+                                    <p class="text-sm text-gray-600 mt-0.5">Run the generator over feedback + trajectories to produce metrics, then evaluate agents with an LLM-as-a-Judge.</p>
+                                </div>
+                            </div>
+                            <div class="relative mx-6 my-4">
+                                <button class="copy-btn" onclick="copyCode('code-induce')">
+                                    <i class="fas fa-copy mr-1"></i> Copy
+                                </button>
+<pre id="code-induce" class="bibtex text-gray-200 bg-gray-900 rounded-lg p-4 overflow-x-auto border border-gray-800">uv run python -m autolibra_core.gen_eval.generator</pre>
+                            </div>
+                        </li>
+                    </ol>
+
+                    <div class="mt-8 flex flex-wrap justify-center gap-3">
+                        <a
+                            href="https://github.com/Open-Social-World/autolibra"
+                            target="_blank"
+                            rel="noopener"
+                            class="inline-flex items-center px-4 py-2 bg-gray-900 text-white text-sm font-medium rounded-md hover:bg-gray-700 transition-colors"
+                        >
+                            <i class="fab fa-github mr-2"></i> Full documentation
+                        </a>
+                        <a
+                            href="https://huggingface.co/datasets/open-social-world/autolibra"
+                            target="_blank"
+                            rel="noopener"
+                            class="inline-flex items-center px-4 py-2 border border-gray-300 text-gray-700 text-sm font-medium rounded-md hover:border-primary hover:text-primary transition-colors"
+                        >
+                            <i class="fas fa-database mr-2"></i> Dataset on Hugging Face
+                        </a>
+                    </div>
+                </div>
+            </section>
+
             <!-- BibTeX -->
             <section id="bibtex" class="px-6 py-16 bg-gray-900 scroll-mt-16">
                 <div class="max-w-3xl mx-auto">
@@ -798,6 +910,18 @@
                 const bib = document.getElementById("bibtex-block").innerText;
                 navigator.clipboard.writeText(bib).then(() => {
                     const btn = document.getElementById("copy-btn-label");
+                    const prev = btn.innerHTML;
+                    btn.innerHTML = '<i class="fas fa-check mr-1"></i> Copied';
+                    setTimeout(() => (btn.innerHTML = prev), 1500);
+                });
+            }
+
+            // Copy a code block (Getting Started section)
+            function copyCode(id) {
+                const pre = document.getElementById(id);
+                if (!pre) return;
+                const btn = pre.parentElement.querySelector(".copy-btn");
+                navigator.clipboard.writeText(pre.innerText).then(() => {
                     const prev = btn.innerHTML;
                     btn.innerHTML = '<i class="fas fa-check mr-1"></i> Copied';
                     setTimeout(() => (btn.innerHTML = prev), 1500);
