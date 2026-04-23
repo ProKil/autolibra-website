@@ -29,8 +29,8 @@
             property="og:description"
             content="A task-agnostic framework that induces fine-grained agent evaluation metrics from open-ended human feedback. ICLR 2026."
         />
-        <meta property="og:url" content="https://autolibra.opensocial.world/" />
-        <meta property="og:image" content="https://autolibra.opensocial.world/static/images/autolibra_teaser_v2.jpg" />
+        <meta property="og:url" content="https://autolibra.org/" />
+        <meta property="og:image" content="https://autolibra.org/static/images/autolibra_teaser_v2.jpg" />
 
         <!-- Twitter -->
         <meta name="twitter:card" content="summary_large_image" />
@@ -39,7 +39,7 @@
             name="twitter:description"
             content="A task-agnostic framework that induces fine-grained agent evaluation metrics from open-ended human feedback. ICLR 2026."
         />
-        <meta name="twitter:image" content="https://autolibra.opensocial.world/static/images/autolibra_teaser_v2.jpg" />
+        <meta name="twitter:image" content="https://autolibra.org/static/images/autolibra_teaser_v2.jpg" />
 
         <!-- Academic / Citation Meta -->
         <meta name="citation_title" content="AutoLibra: Agent Metric Induction from Open-Ended Human Feedback" />
@@ -123,7 +123,7 @@
                     { "@type": "Person", "name": "Diyi Yang", "affiliation": { "@type": "Organization", "name": "Stanford University" } }
                 ],
                 "datePublished": "2025-05-05",
-                "url": "https://autolibra.opensocial.world/",
+                "url": "https://autolibra.org/",
                 "isAccessibleForFree": true
             }
         </script>
@@ -441,17 +441,176 @@
                             <span class="font-mono text-sm">Element Interaction Accuracy</span>.
                         </p>
                     </div>
-                    <figure>
-                        <img
-                            src="static/images/autolibra_teaser_v2.jpg"
-                            alt="AutoLibra pipeline: human feedback is grounded to agent behaviors, clustered into aspects, distilled into metrics, and used by an LLM-as-a-Judge to evaluate trajectories. The coverage and redundancy of the induced metrics on held-out feedback then meta-evaluate the metrics themselves."
-                            class="w-full max-w-5xl mx-auto rounded-xl border border-gray-200 shadow-sm bg-white"
-                            loading="lazy"
-                        />
+                    <figure class="teaser-diagram" aria-label="AutoLibra pipeline diagram: human feedback is grounded to agent behaviors, clustered into aspects, distilled into metrics, and used by an LLM-as-a-Judge to evaluate trajectories. The coverage and redundancy of the induced metrics on held-out feedback then meta-evaluate the metrics themselves.">
+                        <div class="rounded-2xl bg-white border border-gray-200 shadow-sm p-5 md:p-8">
+                            <!-- Pipeline row: Trajectory -> Aspect -> Metric -->
+                            <div class="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-wider text-primary mb-4">
+                                <span class="inline-block w-6 h-px bg-primary/40"></span>
+                                Induction
+                            </div>
+
+                            <div class="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr_auto_1fr] gap-4 items-stretch">
+                                <!-- Step 1: Trajectory + feedback -->
+                                <div class="rounded-xl border border-gray-200 bg-gray-50 p-4 flex flex-col">
+                                    <div class="text-[10px] font-semibold uppercase tracking-wider text-gray-500 mb-2">Trajectory &amp; feedback</div>
+                                    <div class="flex items-start gap-2 text-xs text-gray-700 mb-2">
+                                        <span class="text-primary/70 mt-0.5"><i class="fas fa-tasks"></i></span>
+                                        <span><em>Task:</em> compare prices for iPhone 16 Pro and 15 Pro.</span>
+                                    </div>
+                                    <!-- Mini "browser" mock -->
+                                    <div class="rounded-md border border-gray-200 bg-white shadow-inner overflow-hidden mb-3">
+                                        <div class="flex items-center gap-1 px-2 py-1 border-b border-gray-200 bg-gray-100">
+                                            <span class="w-2 h-2 rounded-full bg-red-300"></span>
+                                            <span class="w-2 h-2 rounded-full bg-yellow-300"></span>
+                                            <span class="w-2 h-2 rounded-full bg-green-300"></span>
+                                            <span class="ml-2 text-[9px] font-mono text-gray-400 truncate">apple.com/shop/buy-iphone</span>
+                                        </div>
+                                        <div class="p-2 space-y-1">
+                                            <div class="h-2 rounded bg-gray-200 w-3/4"></div>
+                                            <div class="h-2 rounded bg-gray-100 w-5/6"></div>
+                                            <div class="flex items-center gap-1 mt-2">
+                                                <span class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-primary/15 text-primary border border-primary/30">iPhone 16 Pro &#9207;</span>
+                                                <span class="text-[9px] text-gray-400">click</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="rounded-md bg-rose-50 border border-rose-200 p-2 text-xs text-gray-800 leading-snug">
+                                        <i class="fas fa-comment-dots text-rose-500 mr-1"></i>
+                                        <em>"The agent did not choose iPhone 14/15."</em>
+                                    </div>
+                                </div>
+
+                                <!-- Arrow 1 -->
+                                <div class="hidden lg:flex items-center justify-center">
+                                    <svg viewBox="0 0 60 24" class="w-14 h-6 text-primary/60" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                                        <line x1="0" y1="12" x2="52" y2="12" stroke-dasharray="3 3" />
+                                        <path d="M46 6 L56 12 L46 18" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </div>
+                                <div class="flex lg:hidden items-center justify-center text-primary/60"><i class="fas fa-arrow-down"></i></div>
+
+                                <!-- Step 2: Aspect -->
+                                <div class="rounded-xl border border-gray-200 bg-gray-50 p-4 flex flex-col">
+                                    <div class="text-[10px] font-semibold uppercase tracking-wider text-gray-500 mb-2">Aspect (grounded)</div>
+                                    <div class="rounded-md bg-indigo-50 border border-indigo-200 p-2.5 text-xs text-gray-800 leading-snug mb-2">
+                                        <div class="text-[10px] font-semibold text-indigo-700 mb-1">BEHAVIOR</div>
+                                        Selected <span class="font-mono">iPhone 16 Pro</span> from the drop-down.
+                                    </div>
+                                    <div class="rounded-md bg-rose-50 border border-rose-200 p-2.5 text-xs text-gray-800 leading-snug">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="text-[10px] font-semibold text-rose-700">FEEDBACK</span>
+                                            <span class="inline-flex items-center justify-center w-4 h-4 rounded-full bg-rose-500 text-white text-[10px] font-bold">−</span>
+                                        </div>
+                                        Did not select iPhone 14/15 as requested.
+                                    </div>
+                                </div>
+
+                                <!-- Arrow 2 -->
+                                <div class="hidden lg:flex items-center justify-center">
+                                    <svg viewBox="0 0 60 24" class="w-14 h-6 text-primary/60" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                                        <line x1="0" y1="12" x2="52" y2="12" stroke-dasharray="3 3" />
+                                        <path d="M46 6 L56 12 L46 18" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </div>
+                                <div class="flex lg:hidden items-center justify-center text-primary/60"><i class="fas fa-arrow-down"></i></div>
+
+                                <!-- Step 3: Induced metric -->
+                                <div class="rounded-xl border border-primary/30 bg-primary-soft/40 p-4 flex flex-col">
+                                    <div class="text-[10px] font-semibold uppercase tracking-wider text-primary mb-2">Induced metric</div>
+                                    <div class="flex items-center gap-2 mb-1.5">
+                                        <img src="static/images/scale.png" alt="" class="h-4 w-4" />
+                                        <span class="font-serif font-semibold text-gray-900 text-sm">Element Interaction Accuracy</span>
+                                    </div>
+                                    <p class="text-[11px] text-gray-600 italic leading-snug mb-2">
+                                        Does the agent select the correct UI element (links, selectors, textboxes)?
+                                    </p>
+                                    <ul class="text-xs space-y-1 text-gray-800">
+                                        <li class="flex items-start gap-1.5"><span class="text-emerald-600 mt-0.5"><i class="fas fa-check-circle"></i></span><span>Picks the search result matching the task.</span></li>
+                                        <li class="flex items-start gap-1.5"><span class="text-emerald-600 mt-0.5"><i class="fas fa-check-circle"></i></span><span>Uses filters correctly.</span></li>
+                                        <li class="flex items-start gap-1.5"><span class="text-rose-500 mt-0.5"><i class="fas fa-times-circle"></i></span><span>Selects wrong drop-down option.</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Divider with down arrow -->
+                            <div class="flex items-center justify-center my-6" aria-hidden="true">
+                                <div class="h-px w-full bg-gray-200"></div>
+                                <div class="flex-shrink-0 mx-3 w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center shadow-sm">
+                                    <i class="fas fa-arrow-down text-sm"></i>
+                                </div>
+                                <div class="h-px w-full bg-gray-200"></div>
+                            </div>
+
+                            <!-- Application row: LLM-as-a-Judge + Meta-eval -->
+                            <div class="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-wider text-primary mb-4">
+                                <span class="inline-block w-6 h-px bg-primary/40"></span>
+                                Evaluation &amp; meta-evaluation
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <!-- LLM-as-a-Judge -->
+                                <div class="rounded-xl border border-gray-200 bg-gray-50 p-4">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <div class="text-[10px] font-semibold uppercase tracking-wider text-gray-500">LLM-as-a-Judge</div>
+                                        <div class="text-[10px] font-mono text-gray-400">new trajectory</div>
+                                    </div>
+                                    <div class="space-y-1.5">
+                                        <div class="flex items-center justify-between rounded-md bg-white border border-gray-200 px-2.5 py-1.5 text-xs">
+                                            <span class="text-gray-800">Query and Search Strategy</span>
+                                            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-emerald-500 text-white text-[11px] font-bold">+</span>
+                                        </div>
+                                        <div class="flex items-center justify-between rounded-md bg-white border border-gray-200 px-2.5 py-1.5 text-xs">
+                                            <span class="text-gray-800">Element Interaction Accuracy</span>
+                                            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-rose-500 text-white text-[11px] font-bold">−</span>
+                                        </div>
+                                        <div class="flex items-center justify-between rounded-md bg-white border border-gray-200 px-2.5 py-1.5 text-xs">
+                                            <span class="text-gray-800">Final Output Quality</span>
+                                            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-emerald-500 text-white text-[11px] font-bold">+</span>
+                                        </div>
+                                        <div class="flex items-center justify-between rounded-md bg-white border border-gray-200 px-2.5 py-1.5 text-xs">
+                                            <span class="text-gray-500 italic">Step Efficiency</span>
+                                            <span class="inline-flex items-center justify-center px-2 h-5 rounded-full bg-gray-300 text-gray-700 text-[10px] font-semibold">N/A</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Meta-eval -->
+                                <div class="rounded-xl border border-gray-200 bg-gray-50 p-4">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <div class="text-[10px] font-semibold uppercase tracking-wider text-gray-500">Meta-evaluation</div>
+                                        <div class="text-[10px] font-mono text-gray-400">held-out feedback</div>
+                                    </div>
+                                    <!-- Coverage bar -->
+                                    <div class="mb-3">
+                                        <div class="flex items-center justify-between text-xs text-gray-700 mb-1">
+                                            <span>Coverage</span>
+                                            <span class="font-mono font-semibold text-primary">82%</span>
+                                        </div>
+                                        <div class="h-2 rounded-full bg-gray-200 overflow-hidden">
+                                            <div class="h-full bg-primary" style="width:82%"></div>
+                                        </div>
+                                        <p class="text-[11px] text-gray-500 mt-1 italic">feedback aspects matched by an induced metric</p>
+                                    </div>
+                                    <!-- Redundancy bar -->
+                                    <div>
+                                        <div class="flex items-center justify-between text-xs text-gray-700 mb-1">
+                                            <span>Redundancy</span>
+                                            <span class="font-mono font-semibold text-gray-700">25%</span>
+                                        </div>
+                                        <div class="h-2 rounded-full bg-gray-200 overflow-hidden">
+                                            <div class="h-full bg-gray-400" style="width:25%"></div>
+                                        </div>
+                                        <p class="text-[11px] text-gray-500 mt-1 italic">metrics with no matching feedback aspect</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <figcaption>
-                            <strong>Figure 1.</strong> AutoLibra induces agent-evaluation metrics
-                            from human feedback, uses them to evaluate agents, and meta-evaluates
-                            the metrics via their coverage of unseen feedback. Example shown on
+                            <strong>Figure 1.</strong> The AutoLibra loop. Feedback is grounded
+                            into <em>aspects</em>, clustered into <em>metrics</em> (top row), then
+                            used by an LLM-as-a-Judge to evaluate new trajectories and
+                            meta-evaluated on held-out feedback via <em>coverage</em> and
+                            <em>redundancy</em> (bottom row). Example drawn from
                             WebVoyager <span class="text-gray-400">[He et al., 2024]</span>.
                         </figcaption>
                     </figure>
