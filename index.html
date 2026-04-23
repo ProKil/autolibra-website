@@ -29,8 +29,8 @@
             property="og:description"
             content="A task-agnostic framework that induces fine-grained agent evaluation metrics from open-ended human feedback. ICLR 2026."
         />
-        <meta property="og:url" content="https://autolibra.opensocial.world/" />
-        <meta property="og:image" content="https://autolibra.opensocial.world/static/images/autolibra_teaser_v2.jpg" />
+        <meta property="og:url" content="https://autolibra.org/" />
+        <meta property="og:image" content="https://autolibra.org/static/images/autolibra_teaser_v2.jpg" />
 
         <!-- Twitter -->
         <meta name="twitter:card" content="summary_large_image" />
@@ -39,7 +39,7 @@
             name="twitter:description"
             content="A task-agnostic framework that induces fine-grained agent evaluation metrics from open-ended human feedback. ICLR 2026."
         />
-        <meta name="twitter:image" content="https://autolibra.opensocial.world/static/images/autolibra_teaser_v2.jpg" />
+        <meta name="twitter:image" content="https://autolibra.org/static/images/autolibra_teaser_v2.jpg" />
 
         <!-- Academic / Citation Meta -->
         <meta name="citation_title" content="AutoLibra: Agent Metric Induction from Open-Ended Human Feedback" />
@@ -123,7 +123,7 @@
                     { "@type": "Person", "name": "Diyi Yang", "affiliation": { "@type": "Organization", "name": "Stanford University" } }
                 ],
                 "datePublished": "2025-05-05",
-                "url": "https://autolibra.opensocial.world/",
+                "url": "https://autolibra.org/",
                 "isAccessibleForFree": true
             }
         </script>
@@ -225,6 +225,26 @@
             .scroll-to-top.visible {
                 opacity: 1;
                 pointer-events: auto;
+            }
+
+            /* Cursor markers for trajectory screenshots */
+            .screenshot-cursor {
+                position: absolute;
+                width: 20px;
+                height: 20px;
+                pointer-events: none;
+                transform: translate(-4px, -2px);
+                filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.35));
+            }
+            .screenshot-cursor svg {
+                width: 100%;
+                height: 100%;
+            }
+            .screenshot-cursor.is-good {
+                color: #10b981;
+            }
+            .screenshot-cursor.is-bad {
+                color: #ef4444;
             }
         </style>
     </head>
@@ -426,7 +446,7 @@
 
             <!-- Teaser figure -->
             <section class="px-6 py-12 bg-gray-50">
-                <div class="max-w-6xl mx-auto">
+                <div class="max-w-7xl mx-auto">
                     <div class="max-w-3xl mx-auto text-center mb-8">
                         <span class="section-chip"><i class="fas fa-eye"></i> At a glance</span>
                         <h2 class="font-serif text-3xl font-semibold text-gray-900 mb-3">
@@ -441,17 +461,455 @@
                             <span class="font-mono text-sm">Element Interaction Accuracy</span>.
                         </p>
                     </div>
-                    <figure>
-                        <img
-                            src="static/images/autolibra_teaser_v2.jpg"
-                            alt="AutoLibra pipeline: human feedback is grounded to agent behaviors, clustered into aspects, distilled into metrics, and used by an LLM-as-a-Judge to evaluate trajectories. The coverage and redundancy of the induced metrics on held-out feedback then meta-evaluate the metrics themselves."
-                            class="w-full max-w-5xl mx-auto rounded-xl border border-gray-200 shadow-sm bg-white"
-                            loading="lazy"
-                        />
+                    <figure class="teaser-diagram" aria-label="AutoLibra pipeline: human feedback on agent trajectories is grounded into aspects, clustered into metrics, used by an LLM-as-a-Judge on new trajectories, and meta-evaluated via coverage and redundancy on held-out feedback.">
+                        <div class="rounded-2xl bg-white border border-gray-200 shadow-sm p-5 md:p-8 space-y-8">
+
+                            <!-- ============== TOP ROW: INDUCTION ============== -->
+                            <div>
+                                <div class="hidden lg:grid grid-cols-[1fr_auto_1fr_auto_1fr] gap-4 items-center mb-3">
+                                    <h3 class="text-center font-serif font-semibold text-gray-900">Collect human feedback for agent trajectories</h3>
+                                    <svg viewBox="0 0 60 24" class="w-14 h-6 text-primary/60 mx-auto" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                                        <line x1="0" y1="12" x2="52" y2="12" stroke-dasharray="3 3" />
+                                        <path d="M46 6 L56 12 L46 18" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                    <h3 class="text-center font-serif font-semibold text-gray-900">Ground feedback into aspects</h3>
+                                    <svg viewBox="0 0 60 24" class="w-14 h-6 text-primary/60 mx-auto" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                                        <line x1="0" y1="12" x2="52" y2="12" stroke-dasharray="3 3" />
+                                        <path d="M46 6 L56 12 L46 18" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                    <h3 class="text-center font-serif font-semibold text-gray-900">Induce metrics from aspects</h3>
+                                </div>
+                                <div class="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr_auto_1fr] gap-4 items-start">
+                                    <!-- COL 1: Trajectories + feedback -->
+                                    <div class="space-y-3">
+                                        <h3 class="lg:hidden text-center font-serif font-semibold text-gray-900">Collect human feedback for agent trajectories</h3>
+                                        <!-- Instance 1: iPhone -->
+                                        <div class="rounded-xl border border-gray-200 bg-gray-50 p-3">
+                                            <div class="flex items-center justify-between mb-2">
+                                                <div class="flex items-center gap-1.5 text-xs text-gray-700">
+                                                    <i class="fas fa-wrench text-primary/70"></i>
+                                                    <span>Compare prices and chips for the <strong>iPhone 14 Pro</strong> and <strong>iPhone 15 Pro</strong>…</span>
+                                                </div>
+                                                <span class="text-[9px] font-semibold text-gray-400 uppercase tracking-wider">Instance</span>
+                                            </div>
+                                            <div class="relative rounded-md overflow-hidden border border-gray-200 mb-2">
+                                                <img src="static/images/trajectory_iphone.jpg" alt="Apple Store iPhone 16 Pro screenshot" loading="lazy" class="w-full block" />
+                                                <div class="absolute top-1 left-1 flex items-center gap-1">
+                                                    <span class="screenshot-cursor is-good" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" stroke="#fff" stroke-width="1" stroke-linejoin="round"><path d="M5 2.5 L5 18.5 L9.2 14.4 L11.8 20.5 L14.4 19.4 L11.8 13.3 L18 13.3 Z"/></svg></span>
+                                                    <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-emerald-500 text-white shadow">Click "iPhone" tab</span>
+                                                </div>
+                                                <div class="absolute bottom-1 left-1 flex items-center gap-1">
+                                                    <span class="screenshot-cursor is-bad" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" stroke="#fff" stroke-width="1" stroke-linejoin="round"><path d="M5 2.5 L5 18.5 L9.2 14.4 L11.8 20.5 L14.4 19.4 L11.8 13.3 L18 13.3 Z"/></svg></span>
+                                                    <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-rose-500 text-white shadow">Click "iPhone 16 Pro Max"</span>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-start gap-1.5 text-[11px] text-gray-800 italic">
+                                                <i class="fas fa-comment-dots text-rose-500 mt-0.5"></i>
+                                                <span>"The agent did not interact with the drop-down to choose iPhone 14/15 Pro."</span>
+                                            </div>
+                                        </div>
+
+                                        <!-- Instance 2: Climbing gear -->
+                                        <div class="rounded-xl border border-gray-200 bg-gray-50 p-3">
+                                            <div class="flex items-center justify-between mb-2">
+                                                <div class="flex items-center gap-1.5 text-xs text-gray-700">
+                                                    <i class="fas fa-wrench text-primary/70"></i>
+                                                    <span>Search climbing gear &amp; <strong>sort by price</strong>.</span>
+                                                </div>
+                                                <span class="text-[9px] font-semibold text-gray-400 uppercase tracking-wider">Instance</span>
+                                            </div>
+                                            <div class="relative rounded-md overflow-hidden border border-gray-200 mb-2">
+                                                <img src="static/images/trajectory_climbing.jpg" alt="Amazon climbing gear search results" loading="lazy" class="w-full block" />
+                                                <div class="absolute top-1 left-2 flex items-center gap-1">
+                                                    <span class="screenshot-cursor is-bad" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" stroke="#fff" stroke-width="1" stroke-linejoin="round"><path d="M5 2.5 L5 18.5 L9.2 14.4 L11.8 20.5 L14.4 19.4 L11.8 13.3 L18 13.3 Z"/></svg></span>
+                                                    <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-rose-500 text-white shadow">Click "All Departments"</span>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-start gap-1.5 text-[11px] text-gray-800 italic">
+                                                <i class="fas fa-comment-dots text-rose-500 mt-0.5"></i>
+                                                <span>"The agent did the right search, but didn't sort by price."</span>
+                                            </div>
+                                        </div>
+
+                                        <!-- Other pairs -->
+                                        <div class="rounded-xl border border-dashed border-gray-300 bg-gray-50 p-3 flex items-center gap-2 text-xs text-gray-500 italic">
+                                            <i class="fas fa-ellipsis-h"></i>
+                                            <span>Other trajectory-feedback pairs.</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Arrow: COL1 -> COL2 -->
+                                    <div class="hidden lg:flex self-center items-center justify-center">
+                                        <svg viewBox="0 0 60 24" class="w-14 h-6 text-primary/70" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+                                            <line x1="0" y1="12" x2="52" y2="12" stroke-dasharray="4 3" />
+                                            <path d="M46 6 L56 12 L46 18" stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </div>
+
+                                    <!-- COL 2: Aspects (grounded) -->
+                                    <div class="space-y-3">
+                                        <h3 class="lg:hidden text-center font-serif font-semibold text-gray-900">Ground feedback into aspects</h3>
+                                        <!-- Aspect 1 -->
+                                        <div class="rounded-xl border border-gray-200 bg-gray-50 p-3">
+                                            <div class="text-[9px] font-semibold text-gray-400 uppercase tracking-wider text-right mb-1.5">Aspect</div>
+                                            <div class="rounded-md bg-indigo-50 border border-indigo-200 p-2 mb-2">
+                                                <div class="text-[9px] font-bold text-indigo-700 uppercase tracking-wider mb-1">
+                                                    <i class="fas fa-robot mr-1"></i>Agent Behavior
+                                                </div>
+                                                <div class="text-xs text-gray-800">Agent selected <span class="font-semibold">iPhone 16 Pro Max</span>.</div>
+                                            </div>
+                                            <div class="rounded-md bg-rose-50 border border-rose-200 p-2">
+                                                <div class="flex items-center justify-between mb-1">
+                                                    <span class="text-[9px] font-bold text-rose-700 uppercase tracking-wider"><i class="fas fa-comment-dots mr-1"></i>Human Feedback Aspect</span>
+                                                    <span class="inline-flex items-center justify-center w-4 h-4 rounded-full bg-rose-500 text-white text-[10px] font-bold">−</span>
+                                                </div>
+                                                <div class="text-xs text-gray-800 font-semibold">The agent did not select the iPhone 14 or 15 in the task.</div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Aspect 2 -->
+                                        <div class="rounded-xl border border-gray-200 bg-gray-50 p-3">
+                                            <div class="text-[9px] font-semibold text-gray-400 uppercase tracking-wider text-right mb-1.5">Aspect</div>
+                                            <div class="rounded-md bg-indigo-50 border border-indigo-200 p-2 mb-2">
+                                                <div class="text-[9px] font-bold text-indigo-700 uppercase tracking-wider mb-1">
+                                                    <i class="fas fa-robot mr-1"></i>Agent Behavior
+                                                </div>
+                                                <div class="text-xs text-gray-800">Clicked <span class="font-semibold">product categories</span>…</div>
+                                            </div>
+                                            <div class="rounded-md bg-rose-50 border border-rose-200 p-2">
+                                                <div class="flex items-center justify-between mb-1">
+                                                    <span class="text-[9px] font-bold text-rose-700 uppercase tracking-wider"><i class="fas fa-comment-dots mr-1"></i>Human Feedback Aspect</span>
+                                                    <span class="inline-flex items-center justify-center w-4 h-4 rounded-full bg-rose-500 text-white text-[10px] font-bold">−</span>
+                                                </div>
+                                                <div class="text-xs text-gray-800 font-semibold">Did not use the correct drop-down for price sorting.</div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Aspect 3: positive behavior -->
+                                        <div class="rounded-xl border border-gray-200 bg-gray-50 p-3">
+                                            <div class="text-[9px] font-semibold text-gray-400 uppercase tracking-wider text-right mb-1.5">Aspect</div>
+                                            <div class="rounded-md bg-emerald-50 border border-emerald-200 p-2">
+                                                <div class="flex items-center justify-between mb-1">
+                                                    <span class="text-[9px] font-bold text-emerald-700 uppercase tracking-wider"><i class="fas fa-robot mr-1"></i>Agent Behavior</span>
+                                                    <span class="inline-flex items-center justify-center w-4 h-4 rounded-full bg-emerald-500 text-white text-[10px] font-bold">+</span>
+                                                </div>
+                                                <div class="text-xs text-gray-800 font-semibold">The agent used the right query.</div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Aspect 4: negative -->
+                                        <div class="rounded-xl border border-gray-200 bg-gray-50 p-3">
+                                            <div class="text-[9px] font-semibold text-gray-400 uppercase tracking-wider text-right mb-1.5">Aspect</div>
+                                            <div class="rounded-md bg-rose-50 border border-rose-200 p-2">
+                                                <div class="flex items-center justify-between mb-1">
+                                                    <span class="text-[9px] font-bold text-rose-700 uppercase tracking-wider"><i class="fas fa-comment-dots mr-1"></i>Human Feedback Aspect</span>
+                                                    <span class="inline-flex items-center justify-center w-4 h-4 rounded-full bg-rose-500 text-white text-[10px] font-bold">−</span>
+                                                </div>
+                                                <div class="text-xs text-gray-800 font-semibold">Specific query not supported.</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="rounded-xl border border-dashed border-gray-300 bg-gray-50 p-3 flex items-center gap-2 text-xs text-gray-500 italic">
+                                            <i class="fas fa-ellipsis-h"></i>
+                                            <span>Other feedback aspects.</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Arrow: COL2 -> COL3 -->
+                                    <div class="hidden lg:flex self-center items-center justify-center">
+                                        <svg viewBox="0 0 60 24" class="w-14 h-6 text-primary/70" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+                                            <line x1="0" y1="12" x2="52" y2="12" stroke-dasharray="4 3" />
+                                            <path d="M46 6 L56 12 L46 18" stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </div>
+
+                                    <!-- COL 3: Induced Metrics -->
+                                    <div class="space-y-3">
+                                        <h3 class="lg:hidden text-center font-serif font-semibold text-gray-900">Induce metrics from aspects</h3>
+                                        <!-- Metric 1 -->
+                                        <div class="rounded-xl border border-primary/30 bg-primary-soft/40 p-3">
+                                            <div class="flex items-center justify-between mb-2">
+                                                <div class="flex items-center gap-1.5">
+                                                    <span class="text-xs">👉📱</span>
+                                                    <span class="font-serif font-semibold text-gray-900 text-sm">Element Interaction Accuracy</span>
+                                                </div>
+                                                <span class="text-[9px] font-semibold text-primary/70 uppercase tracking-wider">Metric</span>
+                                            </div>
+                                            <div class="rounded-md bg-white border border-gray-200 p-2 mb-2">
+                                                <div class="text-[9px] font-bold text-gray-500 uppercase tracking-wider mb-1">
+                                                    <i class="fas fa-align-left mr-1"></i>Metric Description
+                                                </div>
+                                                <p class="text-[11px] text-gray-700 leading-snug">
+                                                    Evaluates if the agent interacts with the correct UI elements. Good
+                                                    behaviors show <strong>accurate targeting of links, buttons, and
+                                                    textboxes</strong>; bad behaviors…
+                                                </p>
+                                            </div>
+                                            <div class="rounded-md bg-emerald-50 border border-emerald-200 p-2 mb-2">
+                                                <div class="text-[9px] font-bold text-emerald-700 uppercase tracking-wider mb-1">
+                                                    <i class="fas fa-check-circle mr-1"></i>Good Behaviors
+                                                </div>
+                                                <ol class="list-decimal list-inside text-[11px] text-gray-800 leading-snug space-y-0.5">
+                                                    <li>Agent correctly uses the search bar to search for news related to Brexit.</li>
+                                                    <li>Agent uses the filter feature to check for audio datasets.</li>
+                                                    <li class="text-gray-400 italic">…</li>
+                                                </ol>
+                                            </div>
+                                            <div class="rounded-md bg-rose-50 border border-rose-200 p-2">
+                                                <div class="text-[9px] font-bold text-rose-700 uppercase tracking-wider">
+                                                    <i class="fas fa-times-circle mr-1"></i>Bad Behaviors
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Metric 2 -->
+                                        <div class="rounded-xl border border-primary/30 bg-primary-soft/40 p-3">
+                                            <div class="flex items-center justify-between mb-2">
+                                                <div class="flex items-center gap-1.5">
+                                                    <span class="text-xs">🔎✅</span>
+                                                    <span class="font-serif font-semibold text-gray-900 text-sm">Query and Search Strategy</span>
+                                                </div>
+                                                <span class="text-[9px] font-semibold text-primary/70 uppercase tracking-wider">Metric</span>
+                                            </div>
+                                            <div class="rounded-md bg-white border border-gray-200 p-2 mb-2">
+                                                <div class="text-[9px] font-bold text-gray-500 uppercase tracking-wider mb-1">
+                                                    <i class="fas fa-align-left mr-1"></i>Metric Description
+                                                </div>
+                                                <p class="text-[11px] text-gray-700 leading-snug">
+                                                    Craft and refine search queries…
+                                                </p>
+                                            </div>
+                                            <div class="rounded-md bg-emerald-50 border border-emerald-200 p-2 mb-2">
+                                                <div class="text-[9px] font-bold text-emerald-700 uppercase tracking-wider">
+                                                    <i class="fas fa-check-circle mr-1"></i>Good Behaviors
+                                                </div>
+                                            </div>
+                                            <div class="rounded-md bg-rose-50 border border-rose-200 p-2">
+                                                <div class="text-[9px] font-bold text-rose-700 uppercase tracking-wider">
+                                                    <i class="fas fa-times-circle mr-1"></i>Bad Behaviors
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="rounded-xl border border-dashed border-primary/30 bg-primary-soft/20 p-3 flex items-center gap-2 text-xs text-gray-500 italic">
+                                            <i class="fas fa-ellipsis-h"></i>
+                                            <span>Other induced metrics.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Divider / flow from top to bottom -->
+                            <div class="flex items-center justify-center" aria-hidden="true">
+                                <div class="h-px w-full bg-gray-200"></div>
+                                <div class="flex-shrink-0 mx-3 w-9 h-9 rounded-full bg-primary text-white flex items-center justify-center shadow-sm">
+                                    <i class="fas fa-arrow-down"></i>
+                                </div>
+                                <div class="h-px w-full bg-gray-200"></div>
+                            </div>
+
+                            <!-- ============== BOTTOM ROW: EVALUATION ============== -->
+                            <div>
+                                <div class="hidden lg:grid grid-cols-[1fr_auto_1fr_auto_1fr] gap-4 items-center mb-3">
+                                    <h3 class="text-center font-serif font-semibold text-gray-900">These metrics are ready to be used for agent evaluation</h3>
+                                    <svg viewBox="0 0 60 24" class="w-14 h-6 text-primary/60 mx-auto" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                                        <line x1="0" y1="12" x2="52" y2="12" stroke-dasharray="3 3" />
+                                        <path d="M46 6 L56 12 L46 18" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                    <h3 class="text-center font-serif font-semibold text-gray-900">Judgment with LLMs</h3>
+                                    <svg viewBox="0 0 60 24" class="w-14 h-6 text-primary/60 mx-auto" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                                        <line x1="0" y1="12" x2="52" y2="12" stroke-dasharray="3 3" />
+                                        <path d="M46 6 L56 12 L46 18" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                    <h3 class="text-center font-serif font-semibold text-gray-900">Evaluate how much unseen human feedback is covered</h3>
+                                </div>
+
+                                <div class="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr_auto_1fr] gap-4 items-start">
+                                    <!-- COL 1: Recipe trajectory + unseen feedback -->
+                                    <div class="space-y-3">
+                                        <h3 class="lg:hidden text-center font-serif font-semibold text-gray-900">These metrics are ready to be used for agent evaluation</h3>
+                                        <div class="rounded-xl border border-gray-200 bg-gray-50 p-3">
+                                            <div class="flex items-center justify-between mb-2">
+                                                <div class="flex items-center gap-1.5 text-xs text-gray-700">
+                                                    <i class="fas fa-wrench text-primary/70"></i>
+                                                    <span>Could you find a recipe with <strong>Chicken</strong> and <strong>Quinoa</strong> and save it?</span>
+                                                </div>
+                                                <span class="text-[9px] font-semibold text-gray-400 uppercase tracking-wider">Instance</span>
+                                            </div>
+                                            <div class="relative rounded-md overflow-hidden border border-gray-200 mb-2">
+                                                <img src="static/images/trajectory_recipe.jpg" alt="Allrecipes search results for chicken breast quinoa" loading="lazy" class="w-full block" />
+                                                <div class="absolute bottom-1 left-2 flex items-center gap-1">
+                                                    <span class="screenshot-cursor is-bad" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" stroke="#fff" stroke-width="1" stroke-linejoin="round"><path d="M5 2.5 L5 18.5 L9.2 14.4 L11.8 20.5 L14.4 19.4 L11.8 13.3 L18 13.3 Z"/></svg></span>
+                                                    <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-rose-500 text-white shadow">Click "Slow Cooked Chicken Stew"</span>
+                                                </div>
+                                                <div class="absolute top-1 right-2 flex items-center gap-1">
+                                                    <span class="screenshot-cursor is-good" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" stroke="#fff" stroke-width="1" stroke-linejoin="round"><path d="M5 2.5 L5 18.5 L9.2 14.4 L11.8 20.5 L14.4 19.4 L11.8 13.3 L18 13.3 Z"/></svg></span>
+                                                    <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-emerald-500 text-white shadow">Click "Save"</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Unseen human feedback -->
+                                        <div class="rounded-xl border border-gray-200 bg-gray-50 p-3">
+                                            <div class="flex items-center gap-1.5 text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-2">
+                                                <i class="fas fa-eye-slash"></i>
+                                                Unseen human feedback
+                                            </div>
+                                            <div class="flex items-start gap-1.5 text-[11px] text-gray-800 italic">
+                                                <i class="fas fa-comment-dots text-rose-500 mt-0.5"></i>
+                                                <span>"The agent efficiently found a recipe, but the recipe contained no chicken breast or quinoa."</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Arrow: COL1 -> COL2 -->
+                                    <div class="hidden lg:flex self-center items-center justify-center">
+                                        <svg viewBox="0 0 60 24" class="w-14 h-6 text-primary/70" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+                                            <line x1="0" y1="12" x2="52" y2="12" stroke-dasharray="4 3" />
+                                            <path d="M46 6 L56 12 L46 18" stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </div>
+
+                                    <!-- COL 2: LLM-as-a-Judge traits -->
+                                    <div class="space-y-3">
+                                    <h3 class="lg:hidden text-center font-serif font-semibold text-gray-900">Judgment with LLMs</h3>
+                                    <div class="rounded-xl border border-gray-200 bg-gray-50 p-3 flex flex-col gap-3">
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex items-center gap-1.5 text-xs text-gray-700">
+                                                <i class="fas fa-gavel text-primary/70"></i>
+                                                <span class="font-semibold">LLM-as-a-Judge output</span>
+                                            </div>
+                                            <span class="text-[9px] font-semibold text-gray-400 uppercase tracking-wider">Traits</span>
+                                        </div>
+
+                                        <!-- Positive traits -->
+                                        <div>
+                                            <div class="text-[10px] font-bold text-emerald-700 uppercase tracking-wider mb-1.5">
+                                                <i class="fas fa-list-check mr-1"></i>Positive Traits
+                                            </div>
+                                            <div class="space-y-1.5">
+                                                <div class="rounded-md bg-emerald-50 border border-emerald-200 px-2 py-1 text-xs flex items-center gap-1.5">
+                                                    <span>🔎✅</span><span>Search query is correct.</span>
+                                                </div>
+                                                <div class="rounded-md bg-emerald-50 border border-emerald-200 px-2 py-1 text-xs flex items-center gap-1.5">
+                                                    <span>👉📱</span><span>Using the correct buttons…</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Negative traits -->
+                                        <div>
+                                            <div class="text-[10px] font-bold text-rose-700 uppercase tracking-wider mb-1.5">
+                                                <i class="fas fa-list-check mr-1"></i>Negative Traits
+                                            </div>
+                                            <div class="space-y-1.5">
+                                                <div class="rounded-md bg-rose-50 border border-rose-200 px-2 py-1 text-xs flex items-center gap-1.5">
+                                                    <span>📝✅</span><span>should choose "Chicken w/…"</span>
+                                                </div>
+                                                <div class="rounded-md bg-rose-50 border border-rose-200 px-2 py-1 text-xs flex items-center gap-1.5">
+                                                    <span>🏁💯</span><span>recipe not desired w/o quinoa</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- N/A metrics -->
+                                        <div>
+                                            <div class="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1.5">
+                                                <i class="fas fa-list mr-1"></i>Not Applicable Metrics
+                                            </div>
+                                            <div class="flex flex-wrap gap-1.5 text-base">
+                                                <span class="inline-flex items-center justify-center w-7 h-7 rounded-md bg-white border border-gray-200">🏁🚨</span>
+                                                <span class="inline-flex items-center justify-center w-7 h-7 rounded-md bg-white border border-gray-200">🔄🚫</span>
+                                                <span class="inline-flex items-center justify-center w-7 h-7 rounded-md bg-white border border-gray-200">🎯</span>
+                                                <span class="inline-flex items-center justify-center w-7 h-7 rounded-md bg-white border border-gray-200">🎯⏱</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </div>
+
+                                    <!-- Arrow: COL2 -> COL3 -->
+                                    <div class="hidden lg:flex self-center items-center justify-center">
+                                        <svg viewBox="0 0 60 24" class="w-14 h-6 text-primary/70" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+                                            <line x1="0" y1="12" x2="52" y2="12" stroke-dasharray="4 3" />
+                                            <path d="M46 6 L56 12 L46 18" stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </div>
+
+                                    <!-- COL 3: Meta Evaluation -->
+                                    <div class="space-y-3">
+                                    <h3 class="lg:hidden text-center font-serif font-semibold text-gray-900">Evaluate how much unseen human feedback is covered</h3>
+                                    <div class="rounded-xl border border-gray-200 bg-gray-50 p-3 flex flex-col gap-3">
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex items-center gap-1.5 text-xs text-gray-700">
+                                                <i class="fas fa-scale-balanced text-primary/70"></i>
+                                                <span class="font-semibold">Meta Evaluation</span>
+                                            </div>
+                                            <span class="text-[9px] font-semibold text-gray-400 uppercase tracking-wider">Meta-metrics</span>
+                                        </div>
+
+                                        <!-- Aspect 1: covered -->
+                                        <div class="rounded-xl border border-indigo-200 bg-indigo-50/60 p-2.5">
+                                            <div class="text-[9px] font-bold text-indigo-700 uppercase tracking-wider mb-1.5 text-right">Aspect</div>
+                                            <p class="text-[11px] text-gray-800 text-center mb-2">Recipe by the agent contained no chicken breast or quinoa.</p>
+                                            <div class="flex items-center justify-center gap-1.5 text-xs">
+                                                <span class="text-emerald-600"><i class="fas fa-check-circle"></i></span>
+                                                <span class="font-semibold text-emerald-700">Covered by</span>
+                                                <span>🏁💯</span>
+                                            </div>
+                                        </div>
+
+                                        <!-- Aspect 2: not covered -->
+                                        <div class="rounded-xl border border-indigo-200 bg-indigo-50/60 p-2.5">
+                                            <div class="text-[9px] font-bold text-indigo-700 uppercase tracking-wider mb-1.5 text-right">Aspect</div>
+                                            <p class="text-[11px] text-gray-800 text-center mb-2">The agent efficiently found a recipe.</p>
+                                            <div class="flex items-center justify-center gap-1.5 text-xs flex-wrap">
+                                                <span class="text-rose-500"><i class="fas fa-times-circle"></i></span>
+                                                <span class="font-semibold text-rose-700">Not covered</span>
+                                                <span class="text-gray-600">since</span>
+                                                <span>🎯⏱</span>
+                                                <span class="text-gray-600">is judged as <span class="font-mono">N/A</span>.</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="text-[11px] text-gray-700 leading-snug text-center pt-1">
+                                            <strong>1 out of 2</strong> feedback aspects covered;<br>
+                                            <strong>3 out of 4</strong> detected traits are redundant.
+                                        </div>
+
+                                        <!-- Aggregate meta-metrics -->
+                                        <div class="border-t border-gray-200 pt-2 space-y-2">
+                                            <div>
+                                                <div class="flex items-center justify-between text-[11px] text-gray-700 mb-0.5">
+                                                    <span>Aggregated Feedback Coverage</span>
+                                                    <span class="font-mono font-semibold text-primary">82%</span>
+                                                </div>
+                                                <div class="h-1.5 rounded-full bg-gray-200 overflow-hidden">
+                                                    <div class="h-full bg-primary" style="width:82%"></div>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="flex items-center justify-between text-[11px] text-gray-700 mb-0.5">
+                                                    <span>Aggregated Metric Redundancy</span>
+                                                    <span class="font-mono font-semibold text-gray-700">75%</span>
+                                                </div>
+                                                <div class="h-1.5 rounded-full bg-gray-200 overflow-hidden">
+                                                    <div class="h-full bg-gray-400" style="width:75%"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <figcaption>
-                            <strong>Figure 1.</strong> AutoLibra induces agent-evaluation metrics
-                            from human feedback, uses them to evaluate agents, and meta-evaluates
-                            the metrics via their coverage of unseen feedback. Example shown on
+                            <strong>Figure 1.</strong> AutoLibra
+                            <img src="static/images/scale.png" alt="" class="inline-icon" />
+                            induces agent-evaluation metrics from human feedback, uses them to
+                            evaluate agents, and meta-evaluates the metrics via their coverage of
+                            unseen feedback. Real examples of agent trajectories, human feedback,
+                            aspects, induced metrics and evaluation results on
                             WebVoyager <span class="text-gray-400">[He et al., 2024]</span>.
                         </figcaption>
                     </figure>
@@ -568,14 +1026,17 @@
 
                     <figure class="mb-4">
                         <img
-                            src="static/images/autolibra_optimization.png"
-                            alt="Optimization loop: induction process produces metrics; evaluation process scores coverage and redundancy; these two objectives are optimized iteratively."
+                            src="static/images/autolibra_optimization.svg"
+                            alt="Metric optimization loop: induction produces metrics from trajectories and feedback; evaluation computes coverage and redundancy; optimization iteratively maximizes coverage and minimizes redundancy."
                             class="w-full max-w-4xl mx-auto rounded-xl border border-gray-200 bg-white p-4"
                             loading="lazy"
                         />
                         <figcaption>
-                            <strong>Figure 2.</strong> Metric optimization: search for the metric
-                            set that maximizes coverage while minimizing redundancy.
+                            <strong>Figure 2.</strong> Metric optimization: the induction
+                            process produces metrics from trajectories and feedback; the
+                            evaluation process measures their coverage and redundancy;
+                            optimizing the induction maximizes coverage while minimizing
+                            redundancy.
                         </figcaption>
                     </figure>
                 </div>
