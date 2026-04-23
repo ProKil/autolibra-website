@@ -1024,16 +1024,134 @@
                         </div>
                     </div>
 
-                    <figure class="mb-4">
-                        <img
-                            src="static/images/autolibra_optimization.png"
-                            alt="Optimization loop: induction process produces metrics; evaluation process scores coverage and redundancy; these two objectives are optimized iteratively."
-                            class="w-full max-w-4xl mx-auto rounded-xl border border-gray-200 bg-white p-4"
-                            loading="lazy"
-                        />
+                    <figure class="mb-4 max-w-4xl mx-auto" aria-label="Metric optimization loop: induction produces metrics from trajectories and feedback; evaluation computes coverage and redundancy; optimization iteratively maximizes coverage and minimizes redundancy.">
+                        <div class="rounded-2xl bg-white border border-gray-200 shadow-sm p-4 md:p-6">
+                            <svg viewBox="0 0 800 360" class="w-full h-auto" xmlns="http://www.w3.org/2000/svg" role="img">
+                                <defs>
+                                    <linearGradient id="optgrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" stop-color="#7c3aed"/>
+                                        <stop offset="100%" stop-color="#f59e0b"/>
+                                    </linearGradient>
+                                    <marker id="ahPurple" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                        <path d="M 0 0 L 10 5 L 0 10 z" fill="#7c3aed"/>
+                                    </marker>
+                                    <marker id="ahGold" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                        <path d="M 0 0 L 10 5 L 0 10 z" fill="#f59e0b"/>
+                                    </marker>
+                                    <marker id="ahGoldSmall" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                                        <path d="M 0 0 L 10 5 L 0 10 z" fill="#f59e0b"/>
+                                    </marker>
+                                </defs>
+
+                                <!-- Top labels -->
+                                <text x="195" y="32" fill="#7c3aed" font-weight="700" font-size="17" letter-spacing="1.2" font-family="Inter, system-ui, sans-serif">INDUCTION</text>
+                                <text x="400" y="32" fill="url(#optgrad)" font-weight="700" font-size="17" letter-spacing="1.2" text-anchor="middle" font-family="Inter, system-ui, sans-serif">OPTIMIZATION</text>
+
+                                <!-- Purple INDUCTION arc (top, left -> right) -->
+                                <path d="M 165 150 C 165 55, 635 55, 635 150"
+                                      stroke="#7c3aed" stroke-width="2.5" fill="none"
+                                      stroke-linecap="round" marker-end="url(#ahPurple)"/>
+
+                                <!-- Left card: Trajectory + Feedback stack -->
+                                <g>
+                                    <rect x="68" y="162" width="210" height="130" rx="10" fill="#f9fafb" stroke="#9ca3af" stroke-width="1.5"/>
+                                    <rect x="58" y="152" width="210" height="130" rx="10" fill="#ffffff" stroke="#111827" stroke-width="2"/>
+                                    <!-- Trajectory icon (curve with arrow) + robot -->
+                                    <g transform="translate(110, 210)" fill="none" stroke="#111827" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M -18 6 Q -9 -14, 0 0 T 18 -14" />
+                                        <path d="M 15 -17 l 3 -3 l -7 -1" />
+                                    </g>
+                                    <g transform="translate(110, 228)" fill="#111827">
+                                        <rect x="-10" y="0" width="20" height="16" rx="2"/>
+                                        <circle cx="-4" cy="7" r="1.8" fill="#ffffff"/>
+                                        <circle cx="4" cy="7" r="1.8" fill="#ffffff"/>
+                                        <rect x="-3" y="-5" width="6" height="5" rx="1"/>
+                                    </g>
+                                    <text x="110" y="265" text-anchor="middle" font-size="14" font-weight="600" fill="#111827" font-family="Inter, system-ui, sans-serif">Trajectory</text>
+                                    <!-- Feedback icon (speech bubble + person) -->
+                                    <g transform="translate(205, 218)" fill="#111827" stroke="#111827" stroke-width="1.5" stroke-linejoin="round">
+                                        <path d="M -20 -14 h 34 a 3 3 0 0 1 3 3 v 14 a 3 3 0 0 1 -3 3 h -28 l -6 6 v -6 a 3 3 0 0 1 -3 -3 v -14 a 3 3 0 0 1 3 -3 z" fill="#ffffff"/>
+                                        <line x1="-14" y1="-8" x2="12" y2="-8" stroke="#111827" stroke-width="1.5"/>
+                                        <line x1="-14" y1="-2" x2="8" y2="-2" stroke="#111827" stroke-width="1.5"/>
+                                    </g>
+                                    <g transform="translate(225, 232)" fill="#111827">
+                                        <circle cx="0" cy="-4" r="4" fill="#ffffff" stroke="#111827" stroke-width="1.5"/>
+                                        <path d="M -6 8 a 6 8 0 0 1 12 0" fill="#ffffff" stroke="#111827" stroke-width="1.5"/>
+                                    </g>
+                                    <text x="220" y="265" text-anchor="middle" font-size="14" font-weight="600" fill="#111827" font-family="Inter, system-ui, sans-serif">Feedback</text>
+                                </g>
+
+                                <!-- Right card: Metric stack (description + good + bad) -->
+                                <g>
+                                    <rect x="542" y="162" width="220" height="130" rx="10" fill="#f9fafb" stroke="#9ca3af" stroke-width="1.5"/>
+                                    <rect x="532" y="152" width="220" height="130" rx="10" fill="#ffffff" stroke="#111827" stroke-width="2"/>
+
+                                    <!-- Metric Description icon: lines -->
+                                    <g transform="translate(575, 205)" stroke="#111827" stroke-width="2.5" stroke-linecap="round">
+                                        <line x1="-16" y1="-12" x2="16" y2="-12"/>
+                                        <line x1="-16" y1="-3" x2="16" y2="-3"/>
+                                        <line x1="-16" y1="6" x2="16" y2="6"/>
+                                    </g>
+                                    <text x="575" y="248" text-anchor="middle" font-size="12" font-weight="600" fill="#111827" font-family="Inter, system-ui, sans-serif">Metric</text>
+                                    <text x="575" y="264" text-anchor="middle" font-size="12" font-weight="600" fill="#111827" font-family="Inter, system-ui, sans-serif">Description</text>
+
+                                    <!-- Good Behaviors: curve with check -->
+                                    <g transform="translate(645, 205)" fill="none" stroke="#111827" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M -22 5 Q -14 -14, -5 -4 T 8 -10"/>
+                                        <path d="M 5 -13 l 3 -3 l -6 -1"/>
+                                    </g>
+                                    <g transform="translate(655, 202)" fill="none" stroke="#10b981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M -3 0 l 3 4 l 7 -9"/>
+                                    </g>
+                                    <text x="645" y="248" text-anchor="middle" font-size="12" font-weight="600" fill="#111827" font-family="Inter, system-ui, sans-serif">Good</text>
+                                    <text x="645" y="264" text-anchor="middle" font-size="12" font-weight="600" fill="#111827" font-family="Inter, system-ui, sans-serif">Behaviors</text>
+
+                                    <!-- Bad Behaviors: curve with X -->
+                                    <g transform="translate(720, 205)" fill="none" stroke="#111827" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M -22 5 Q -14 -14, -5 -4 T 8 -10"/>
+                                        <path d="M 5 -13 l 3 -3 l -6 -1"/>
+                                    </g>
+                                    <g transform="translate(730, 202)" fill="none" stroke="#ef4444" stroke-width="3" stroke-linecap="round">
+                                        <line x1="-5" y1="-5" x2="5" y2="5"/>
+                                        <line x1="5" y1="-5" x2="-5" y2="5"/>
+                                    </g>
+                                    <text x="720" y="248" text-anchor="middle" font-size="12" font-weight="600" fill="#111827" font-family="Inter, system-ui, sans-serif">Bad</text>
+                                    <text x="720" y="264" text-anchor="middle" font-size="12" font-weight="600" fill="#111827" font-family="Inter, system-ui, sans-serif">Behaviors</text>
+                                </g>
+
+                                <!-- Middle: MAX Coverage / MIN Redundancy -->
+                                <g>
+                                    <!-- MAX label -->
+                                    <text x="340" y="135" text-anchor="middle" font-size="14" font-weight="700" fill="#f59e0b" letter-spacing="1" font-family="Inter, system-ui, sans-serif">MAX</text>
+                                    <!-- MIN label -->
+                                    <text x="460" y="135" text-anchor="middle" font-size="14" font-weight="700" fill="#ea580c" letter-spacing="1" font-family="Inter, system-ui, sans-serif">MIN</text>
+                                    <!-- Upward gold bracket/arrows converging -->
+                                    <path d="M 340 180 L 340 150" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round" fill="none" marker-end="url(#ahGoldSmall)"/>
+                                    <path d="M 460 180 L 460 150" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round" fill="none" marker-end="url(#ahGoldSmall)"/>
+                                    <!-- Coverage / Redundancy labels -->
+                                    <text x="340" y="210" text-anchor="middle" font-size="16" font-weight="700" fill="#111827" font-family="Inter, system-ui, sans-serif">Coverage</text>
+                                    <text x="460" y="210" text-anchor="middle" font-size="16" font-weight="700" fill="#111827" font-family="Inter, system-ui, sans-serif">Redundancy</text>
+                                </g>
+
+                                <!-- Yellow EVALUATION arcs from both boxes up to Coverage/Redundancy -->
+                                <path d="M 163 282 C 163 340, 340 340, 340 250"
+                                      stroke="#f59e0b" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                                <path d="M 640 282 C 640 340, 460 340, 460 250"
+                                      stroke="#f59e0b" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+
+                                <!-- EVALUATION label at bottom center -->
+                                <text x="400" y="340" text-anchor="middle" fill="#f59e0b" font-weight="700" font-size="17" letter-spacing="1.2" font-family="Inter, system-ui, sans-serif">EVALUATION</text>
+                            </svg>
+                        </div>
                         <figcaption>
-                            <strong>Figure 2.</strong> Metric optimization: search for the metric
-                            set that maximizes coverage while minimizing redundancy.
+                            <strong>Figure 2.</strong> Metric optimization: the
+                            <span class="text-purple-700 font-semibold">induction</span>
+                            process produces metrics from trajectories and feedback, and the
+                            <span class="text-amber-600 font-semibold">evaluation</span>
+                            process measures their coverage and redundancy. We
+                            <span class="text-amber-600 font-semibold">optimize</span> the
+                            induced metric set by maximizing coverage while minimizing
+                            redundancy.
                         </figcaption>
                     </figure>
                 </div>
