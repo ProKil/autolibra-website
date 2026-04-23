@@ -226,6 +226,26 @@
                 opacity: 1;
                 pointer-events: auto;
             }
+
+            /* Cursor markers for trajectory screenshots */
+            .screenshot-cursor {
+                position: absolute;
+                width: 20px;
+                height: 20px;
+                pointer-events: none;
+                transform: translate(-4px, -2px);
+                filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.35));
+            }
+            .screenshot-cursor svg {
+                width: 100%;
+                height: 100%;
+            }
+            .screenshot-cursor.is-good {
+                color: #10b981;
+            }
+            .screenshot-cursor.is-bad {
+                color: #ef4444;
+            }
         </style>
     </head>
 
@@ -446,15 +466,23 @@
 
                             <!-- ============== TOP ROW: INDUCTION ============== -->
                             <div>
-                                <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-3">
+                                <div class="hidden lg:grid grid-cols-[1fr_auto_1fr_auto_1fr] gap-4 items-center mb-3">
                                     <h3 class="text-center font-serif font-semibold text-gray-900">Collect human feedback for agent trajectories</h3>
+                                    <svg viewBox="0 0 60 24" class="w-14 h-6 text-primary/60 mx-auto" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                                        <line x1="0" y1="12" x2="52" y2="12" stroke-dasharray="3 3" />
+                                        <path d="M46 6 L56 12 L46 18" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
                                     <h3 class="text-center font-serif font-semibold text-gray-900">Ground feedback into aspects</h3>
+                                    <svg viewBox="0 0 60 24" class="w-14 h-6 text-primary/60 mx-auto" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                                        <line x1="0" y1="12" x2="52" y2="12" stroke-dasharray="3 3" />
+                                        <path d="M46 6 L56 12 L46 18" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
                                     <h3 class="text-center font-serif font-semibold text-gray-900">Induce metrics from aspects</h3>
                                 </div>
-
-                                <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                                <div class="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr_auto_1fr] gap-4 items-start">
                                     <!-- COL 1: Trajectories + feedback -->
                                     <div class="space-y-3">
+                                        <h3 class="lg:hidden text-center font-serif font-semibold text-gray-900">Collect human feedback for agent trajectories</h3>
                                         <!-- Instance 1: iPhone -->
                                         <div class="rounded-xl border border-gray-200 bg-gray-50 p-3">
                                             <div class="flex items-center justify-between mb-2">
@@ -466,8 +494,14 @@
                                             </div>
                                             <div class="relative rounded-md overflow-hidden border border-gray-200 mb-2">
                                                 <img src="static/images/trajectory_iphone.jpg" alt="Apple Store iPhone 16 Pro screenshot" loading="lazy" class="w-full block" />
-                                                <span class="absolute top-1 left-1 text-[10px] font-mono px-1.5 py-0.5 rounded bg-emerald-500 text-white shadow">Click "iPhone" tab</span>
-                                                <span class="absolute bottom-1 left-1 text-[10px] font-mono px-1.5 py-0.5 rounded bg-rose-500 text-white shadow">Click "iPhone 16 Pro Max"</span>
+                                                <div class="absolute top-1 left-1 flex items-center gap-1">
+                                                    <span class="screenshot-cursor is-good" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" stroke="#fff" stroke-width="1" stroke-linejoin="round"><path d="M5 2.5 L5 18.5 L9.2 14.4 L11.8 20.5 L14.4 19.4 L11.8 13.3 L18 13.3 Z"/></svg></span>
+                                                    <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-emerald-500 text-white shadow">Click "iPhone" tab</span>
+                                                </div>
+                                                <div class="absolute bottom-1 left-1 flex items-center gap-1">
+                                                    <span class="screenshot-cursor is-bad" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" stroke="#fff" stroke-width="1" stroke-linejoin="round"><path d="M5 2.5 L5 18.5 L9.2 14.4 L11.8 20.5 L14.4 19.4 L11.8 13.3 L18 13.3 Z"/></svg></span>
+                                                    <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-rose-500 text-white shadow">Click "iPhone 16 Pro Max"</span>
+                                                </div>
                                             </div>
                                             <div class="flex items-start gap-1.5 text-[11px] text-gray-800 italic">
                                                 <i class="fas fa-comment-dots text-rose-500 mt-0.5"></i>
@@ -486,7 +520,10 @@
                                             </div>
                                             <div class="relative rounded-md overflow-hidden border border-gray-200 mb-2">
                                                 <img src="static/images/trajectory_climbing.jpg" alt="Amazon climbing gear search results" loading="lazy" class="w-full block" />
-                                                <span class="absolute top-1 left-2 text-[10px] font-mono px-1.5 py-0.5 rounded bg-rose-500 text-white shadow">Click "All Departments"</span>
+                                                <div class="absolute top-1 left-2 flex items-center gap-1">
+                                                    <span class="screenshot-cursor is-bad" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" stroke="#fff" stroke-width="1" stroke-linejoin="round"><path d="M5 2.5 L5 18.5 L9.2 14.4 L11.8 20.5 L14.4 19.4 L11.8 13.3 L18 13.3 Z"/></svg></span>
+                                                    <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-rose-500 text-white shadow">Click "All Departments"</span>
+                                                </div>
                                             </div>
                                             <div class="flex items-start gap-1.5 text-[11px] text-gray-800 italic">
                                                 <i class="fas fa-comment-dots text-rose-500 mt-0.5"></i>
@@ -501,8 +538,17 @@
                                         </div>
                                     </div>
 
+                                    <!-- Arrow: COL1 -> COL2 -->
+                                    <div class="hidden lg:flex self-center items-center justify-center">
+                                        <svg viewBox="0 0 60 24" class="w-14 h-6 text-primary/70" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+                                            <line x1="0" y1="12" x2="52" y2="12" stroke-dasharray="4 3" />
+                                            <path d="M46 6 L56 12 L46 18" stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </div>
+
                                     <!-- COL 2: Aspects (grounded) -->
                                     <div class="space-y-3">
+                                        <h3 class="lg:hidden text-center font-serif font-semibold text-gray-900">Ground feedback into aspects</h3>
                                         <!-- Aspect 1 -->
                                         <div class="rounded-xl border border-gray-200 bg-gray-50 p-3">
                                             <div class="text-[9px] font-semibold text-gray-400 uppercase tracking-wider text-right mb-1.5">Aspect</div>
@@ -569,8 +615,17 @@
                                         </div>
                                     </div>
 
+                                    <!-- Arrow: COL2 -> COL3 -->
+                                    <div class="hidden lg:flex self-center items-center justify-center">
+                                        <svg viewBox="0 0 60 24" class="w-14 h-6 text-primary/70" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+                                            <line x1="0" y1="12" x2="52" y2="12" stroke-dasharray="4 3" />
+                                            <path d="M46 6 L56 12 L46 18" stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </div>
+
                                     <!-- COL 3: Induced Metrics -->
                                     <div class="space-y-3">
+                                        <h3 class="lg:hidden text-center font-serif font-semibold text-gray-900">Induce metrics from aspects</h3>
                                         <!-- Metric 1 -->
                                         <div class="rounded-xl border border-primary/30 bg-primary-soft/40 p-3">
                                             <div class="flex items-center justify-between mb-2">
@@ -655,15 +710,24 @@
 
                             <!-- ============== BOTTOM ROW: EVALUATION ============== -->
                             <div>
-                                <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-3">
+                                <div class="hidden lg:grid grid-cols-[1fr_auto_1fr_auto_1fr] gap-4 items-center mb-3">
                                     <h3 class="text-center font-serif font-semibold text-gray-900">These metrics are ready to be used for agent evaluation</h3>
+                                    <svg viewBox="0 0 60 24" class="w-14 h-6 text-primary/60 mx-auto" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                                        <line x1="0" y1="12" x2="52" y2="12" stroke-dasharray="3 3" />
+                                        <path d="M46 6 L56 12 L46 18" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
                                     <h3 class="text-center font-serif font-semibold text-gray-900">Judgment with LLMs</h3>
+                                    <svg viewBox="0 0 60 24" class="w-14 h-6 text-primary/60 mx-auto" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                                        <line x1="0" y1="12" x2="52" y2="12" stroke-dasharray="3 3" />
+                                        <path d="M46 6 L56 12 L46 18" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
                                     <h3 class="text-center font-serif font-semibold text-gray-900">Evaluate how much unseen human feedback is covered</h3>
                                 </div>
 
-                                <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                                <div class="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr_auto_1fr] gap-4 items-start">
                                     <!-- COL 1: Recipe trajectory + unseen feedback -->
                                     <div class="space-y-3">
+                                        <h3 class="lg:hidden text-center font-serif font-semibold text-gray-900">These metrics are ready to be used for agent evaluation</h3>
                                         <div class="rounded-xl border border-gray-200 bg-gray-50 p-3">
                                             <div class="flex items-center justify-between mb-2">
                                                 <div class="flex items-center gap-1.5 text-xs text-gray-700">
@@ -674,8 +738,14 @@
                                             </div>
                                             <div class="relative rounded-md overflow-hidden border border-gray-200 mb-2">
                                                 <img src="static/images/trajectory_recipe.jpg" alt="Allrecipes search results for chicken breast quinoa" loading="lazy" class="w-full block" />
-                                                <span class="absolute bottom-1 left-2 text-[10px] font-mono px-1.5 py-0.5 rounded bg-rose-500 text-white shadow">Click "Slow Cooked Chicken Stew"</span>
-                                                <span class="absolute top-1 right-2 text-[10px] font-mono px-1.5 py-0.5 rounded bg-emerald-500 text-white shadow">Click "Save"</span>
+                                                <div class="absolute bottom-1 left-2 flex items-center gap-1">
+                                                    <span class="screenshot-cursor is-bad" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" stroke="#fff" stroke-width="1" stroke-linejoin="round"><path d="M5 2.5 L5 18.5 L9.2 14.4 L11.8 20.5 L14.4 19.4 L11.8 13.3 L18 13.3 Z"/></svg></span>
+                                                    <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-rose-500 text-white shadow">Click "Slow Cooked Chicken Stew"</span>
+                                                </div>
+                                                <div class="absolute top-1 right-2 flex items-center gap-1">
+                                                    <span class="screenshot-cursor is-good" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" stroke="#fff" stroke-width="1" stroke-linejoin="round"><path d="M5 2.5 L5 18.5 L9.2 14.4 L11.8 20.5 L14.4 19.4 L11.8 13.3 L18 13.3 Z"/></svg></span>
+                                                    <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-emerald-500 text-white shadow">Click "Save"</span>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -692,7 +762,17 @@
                                         </div>
                                     </div>
 
+                                    <!-- Arrow: COL1 -> COL2 -->
+                                    <div class="hidden lg:flex self-center items-center justify-center">
+                                        <svg viewBox="0 0 60 24" class="w-14 h-6 text-primary/70" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+                                            <line x1="0" y1="12" x2="52" y2="12" stroke-dasharray="4 3" />
+                                            <path d="M46 6 L56 12 L46 18" stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </div>
+
                                     <!-- COL 2: LLM-as-a-Judge traits -->
+                                    <div class="space-y-3">
+                                    <h3 class="lg:hidden text-center font-serif font-semibold text-gray-900">Judgment with LLMs</h3>
                                     <div class="rounded-xl border border-gray-200 bg-gray-50 p-3 flex flex-col gap-3">
                                         <div class="flex items-center justify-between">
                                             <div class="flex items-center gap-1.5 text-xs text-gray-700">
@@ -745,8 +825,19 @@
                                             </div>
                                         </div>
                                     </div>
+                                    </div>
+
+                                    <!-- Arrow: COL2 -> COL3 -->
+                                    <div class="hidden lg:flex self-center items-center justify-center">
+                                        <svg viewBox="0 0 60 24" class="w-14 h-6 text-primary/70" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+                                            <line x1="0" y1="12" x2="52" y2="12" stroke-dasharray="4 3" />
+                                            <path d="M46 6 L56 12 L46 18" stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </div>
 
                                     <!-- COL 3: Meta Evaluation -->
+                                    <div class="space-y-3">
+                                    <h3 class="lg:hidden text-center font-serif font-semibold text-gray-900">Evaluate how much unseen human feedback is covered</h3>
                                     <div class="rounded-xl border border-gray-200 bg-gray-50 p-3 flex flex-col gap-3">
                                         <div class="flex items-center justify-between">
                                             <div class="flex items-center gap-1.5 text-xs text-gray-700">
@@ -806,6 +897,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
                                     </div>
                                 </div>
                             </div>
